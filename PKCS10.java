@@ -24,6 +24,7 @@ import org.bouncycastle.openssl.jcajce.JcaPEMWriter;
  *     export CLASSPATH=.:$CLASSPATH:~/jars/*
  *
  */
+
 public class PKCS10 {
  
     public static int RSA_KEYSIZE = 2048;
@@ -32,13 +33,33 @@ public class PKCS10 {
  
         Security.addProvider(new BouncyCastleProvider());
 
+        //
         // Generate an RSA key pair
+        //
+
+        // Initialise a secure random number generator
+        SecureRandom sr = SecureRandom.getInstance("SHA1PRNG", "SUN");
+        
+        // Call nextBytes to cause the PRNG to be seeded using a secure 
+        // mechanism provided by the underlying operating system.
+        byte[] bytes = new byte[512];
+        sr.nextBytes(bytes); 
+
+        // Now that we have handled setting up the PRNG, lets generate the 
+        // keypair.
         KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
-        keyGen.initialize(RSA_KEYSIZE, new SecureRandom());
+        keyGen.initialize(RSA_KEYSIZE, sr);
         KeyPair kp = keyGen.genKeyPair();
 
+
+        //
         // Generate the PKCS#10 CSR 
-        JcaPKCS10CertificationRequestBuilder builder = new JcaPKCS10CertificationRequestBuilder(new X500Principal("cn=phil"), kp.getPublic());
+        //
+        JcaPKCS10CertificationRequestBuilder builder = 
+            new JcaPKCS10CertificationRequestBuilder(
+                new X500Principal("cn=Phil Ratcliffe, o=Red Kestrel"), 
+                kp.getPublic()
+            );
         JcaContentSignerBuilder signerBuilder = new JcaContentSignerBuilder("SHA1withRSA");
         PKCS10CertificationRequest csr = builder.build(signerBuilder.build(kp.getPrivate()));
 
