@@ -11,6 +11,8 @@ using Org.BouncyCastle.Asn1.Pkcs;
 using System.Collections;
 using Org.BouncyCastle.Pkcs;
 using Org.BouncyCastle.Crypto.Operators;
+using Org.BouncyCastle.OpenSsl;
+using System.IO;
 
 namespace pkcs10gen
 {
@@ -32,23 +34,33 @@ namespace pkcs10gen
 
             IDictionary attrs = new Hashtable();
 
-            attrs.Add(X509Name.C, "AU");
-            attrs.Add(X509Name.O, "The Legion of the Bouncy Castle");
-            attrs.Add(X509Name.L, "Melbourne");
-            attrs.Add(X509Name.ST, "Victoria");
-            attrs.Add(X509Name.EmailAddress, "feedback-crypto@bouncycastle.org");
-
+            attrs.Add(X509Name.C, "GB");
+            attrs.Add(X509Name.O, "Red Kestrel");
+            attrs.Add(X509Name.CN, "Phil Ratcliffe");
+            
             X509Name subject = new X509Name(new ArrayList(attrs.Keys), attrs);
 
             AsymmetricCipherKeyPair pair = MakeKeyPair();
+            
             Asn1SignatureFactory sigFact = new Asn1SignatureFactory("SHA1withRSA", pair.Private, new SecureRandom());
 
-            Pkcs10CertificationRequest req1 = new Pkcs10CertificationRequest(
+            Pkcs10CertificationRequest req = new Pkcs10CertificationRequest(
                 sigFact,
                 subject,
                 pair.Public,
                 null,
                 pair.Private);
+
+            //
+            // Convert BouncyCastle CSR to PEM string.
+            //
+            StringBuilder CSRPem = new StringBuilder();
+            PemWriter CSRPemWriter = new PemWriter(new StringWriter(CSRPem));
+            CSRPemWriter.WriteObject(req);
+            CSRPemWriter.Writer.Flush();
+            
+            Console.Write(CSRPem);
+
 
         }
     }
