@@ -17,10 +17,12 @@ import org.bouncycastle.openssl.jcajce.JcaPEMWriter;
  * A class that generates PKCS10 certificate signing requests for testing
  * purposes only.
  * 
- * The code requires that the bouncycaslte jars are on the CLASSPATH:
+ * The code requires that the bouncycaslte jars are on the CLASSPATH or
+ * in the jre/lib/ext directory.
  *
  * For example:
- *     copy bcprov-ext-jdk15on-153.jar and bcprov-jdk15on-153.jar to ~/jars
+ *     copy bcprov-ext-jdk15on-153.jar, bcprov-jdk15on-153.jar, and
+ *     bcpkix-jdk15on-153.jar to ~/jars
  *     export CLASSPATH=.:$CLASSPATH:~/jars/*
  *
  */
