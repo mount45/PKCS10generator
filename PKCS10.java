@@ -40,7 +40,7 @@ public class PKCS10 {
         //
 
         // Initialise a secure random number generator
-        SecureRandom sr = SecureRandom.getInstance("SHA1PRNG", "SUN");
+        SecureRandom sr = SecureRandom.getInstance("SHA1PRNG", "BC");
         
         // Call nextBytes to cause the PRNG to be seeded using a secure 
         // mechanism provided by the underlying operating system.
