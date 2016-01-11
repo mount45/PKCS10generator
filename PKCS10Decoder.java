@@ -17,9 +17,8 @@ import org.bouncycastle.util.io.pem.PemObject;
 
 
 /**
- * A class that generates PKCS10 certificate signing requests for testing
- * purposes only.
- * 
+ * A class that decodes a PKCS10 certificate signing request.
+ *
  * The code requires that the bouncycaslte jars are on the CLASSPATH or
  * in the jre/lib/ext directory.
  *
@@ -31,12 +30,22 @@ import org.bouncycastle.util.io.pem.PemObject;
  */
 
 public class PKCS10Decoder {
- 
+
     public static int RSA_KEYSIZE = 2048;
 
     public static void main(String[] args) throws Exception {
- 
-        PemReader reader = new PemReader(new FileReader("csr"));
+
+        String csrFilename;
+
+        if (args.length < 1)
+        {
+            csrFilename = "csr";
+        }
+        else
+        {
+            csrFilename = args[0];
+        }
+        PemReader reader = new PemReader(new FileReader(csrFilename));
         PemObject pemObject = reader.readPemObject();
         reader.close();
 
@@ -47,5 +56,5 @@ public class PKCS10Decoder {
         pem.writeObject(csr);
         pem.close();
     }
- 
+
 }
