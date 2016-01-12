@@ -14,6 +14,9 @@ using Org.BouncyCastle.Crypto.Operators;
 using Org.BouncyCastle.OpenSsl;
 using System.IO;
 
+//
+// Simple demo of generating a PKCS#10 with C#.
+//
 namespace pkcs10gen
 {
     class Program
