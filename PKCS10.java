@@ -21,8 +21,11 @@ import org.bouncycastle.openssl.jcajce.JcaPEMWriter;
  * in the jre/lib/ext directory.
  *
  * For example:
+ *     To put the BC libs on the CLASSPATH you could do this:
+ * 
  *     copy bcprov-ext-jdk15on-153.jar, bcprov-jdk15on-153.jar, and
  *     bcpkix-jdk15on-153.jar to ~/jars
+ * 
  *     export CLASSPATH=.:$CLASSPATH:~/jars/*
  *
  */
@@ -36,10 +39,10 @@ public class PKCS10 {
         Security.addProvider(new BouncyCastleProvider());
 
         //
-        // Generate an RSA key pair
+        // Generate an RSA key pair.
         //
 
-        // Initialise a secure random number generator
+        // Initialise a secure random number generator.
         SecureRandom sr = SecureRandom.getInstance("SHA1PRNG", "BC");
         
         // Call nextBytes to cause the PRNG to be seeded using a secure 
