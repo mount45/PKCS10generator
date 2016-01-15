@@ -58,7 +58,7 @@ public class PKCS10 {
 
 
         //
-        // Generate the PKCS#10 CSR 
+        // Generate the PKCS#10 CSR. This is just a simple CSR containing a public key and DN. 
         //
         JcaPKCS10CertificationRequestBuilder builder = 
             new JcaPKCS10CertificationRequestBuilder(
