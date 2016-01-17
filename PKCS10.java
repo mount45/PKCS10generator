@@ -51,7 +51,7 @@ public class PKCS10 {
         sr.nextBytes(bytes); 
 
         // Now that we have handled setting up the PRNG, lets generate the 
-        // keypair.
+        // RSA keypair.
         KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
         keyGen.initialize(RSA_KEYSIZE, sr);
         KeyPair kp = keyGen.genKeyPair();
