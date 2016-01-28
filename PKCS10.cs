@@ -14,6 +14,9 @@ using Org.BouncyCastle.Crypto.Operators;
 using Org.BouncyCastle.OpenSsl;
 using System.IO;
 
+//
+// Simple demo of generating a PKCS#10 with C#.
+//
 namespace pkcs10gen
 {
     class Program
@@ -44,6 +47,7 @@ namespace pkcs10gen
             
             Asn1SignatureFactory sigFact = new Asn1SignatureFactory("SHA1withRSA", pair.Private, new SecureRandom());
 
+            // Create the PKCS10 CSR.
             Pkcs10CertificationRequest req = new Pkcs10CertificationRequest(
                 sigFact,
                 subject,
@@ -52,13 +56,12 @@ namespace pkcs10gen
                 pair.Private);
 
             //
-            // Convert BouncyCastle CSR to PEM string.
+            // Convert BouncyCastle CSR to PEM string and write to Console.
             //
             StringBuilder CSRPem = new StringBuilder();
             PemWriter CSRPemWriter = new PemWriter(new StringWriter(CSRPem));
             CSRPemWriter.WriteObject(req);
             CSRPemWriter.Writer.Flush();
-            
             Console.Write(CSRPem);
 
 
