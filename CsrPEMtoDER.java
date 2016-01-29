@@ -19,8 +19,6 @@ import org.bouncycastle.util.io.pem.PemObject;
 
 public class CsrPEMtoDER {
 
-    public static int RSA_KEYSIZE = 2048;
-
     public static void main(String[] args) throws Exception {
 
         String csrFilename;
@@ -33,12 +31,16 @@ public class CsrPEMtoDER {
         {
             csrFilename = args[0];
         }
+
+        // Read CSR from file
         PemReader reader = new PemReader(new FileReader(csrFilename));
         PemObject pemObject = reader.readPemObject();
         reader.close();
 
+        // Create a BC P10 request object
         PKCS10CertificationRequest csr = new PKCS10CertificationRequest(pemObject.getContent());
 
+        // Write the DER encoded request to a file
         FileOutputStream output = new FileOutputStream("csr.der");
         output.write(csr.getEncoded());
         output.close();
