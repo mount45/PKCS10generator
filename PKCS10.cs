@@ -15,7 +15,8 @@ using Org.BouncyCastle.OpenSsl;
 using System.IO;
 
 //
-// Simple demo of generating a PKCS#10 with C#.
+// Simple demo showing how to generate a PKCS#10 CSR with C# and 
+// the BouncyCastle library.
 //
 namespace pkcs10gen
 {
@@ -63,8 +64,6 @@ namespace pkcs10gen
             CSRPemWriter.WriteObject(req);
             CSRPemWriter.Writer.Flush();
             Console.Write(CSRPem);
-
-
         }
     }
 }
